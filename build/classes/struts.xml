@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- 指定Struts 2配置文件的根元素 -->
+<struts>
+
+	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
+
+	<package name="struts" extends="struts-default">
+		<action name="login" class="LoginAction">
+			<result name="0">/quanwei.jsp</result>
+			<result name="1">/zongjianguanyuanjiemian.jsp</result>
+			<result name="2">/departmentPage.jsp</result>
+			<result name="3">/jiedaobangongneng.jsp</result>
+			<result name="4">/jianchayuangongneng.jsp</result>
+			<result name="5">/company.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+		<!--管理user部分的Action -->
+		<!--增加user -->
+		<action name="addUser" class="addUserAction" method="addUser">
+			<result name="success" type="redirectAction">listZUsers</result>
+			<result name="input">/files/addzongjianguanyuan.jsp</result>
+		</action>
+		<!--列出user -->
+		<action name="listZUsers" class="listZUserAction" method="ListZUsers">
+			<result name="success">/files/zongjianguanyuan.jsp</result>
+			<result name="input">/quanwei.jsp</result>
+		</action>
+		<!--删除user -->
+		<action name="deleteUser" class="deleteUserAction" method="deleteUser">
+			<result name="success" type="redirectAction">listZUsers</result>
+			<result name="input" type="redirectAction">listZUsers</result>
+		</action>
+		<!--编辑user -->
+		<action name="editPUser" class="editPUserAction" method="editPUser">
+			<result name="success">/files/editzongjianguanyuan.jsp</result>
+			<result name="input" type="redirectAction">listZUsers</result>
+		</action>
+		<!--更新user -->
+		<action name="updateUser" class="updateUserAction" method="updateUser">
+			<result name="success" type="redirectAction">listZUsers</result>
+			<result name="input">/files/editzongjianguanyuan.jsp</result>
+		</action>
+		<!--管理Department部分的Action -->
+		<!--增加department -->
+
+		<action name="listDepartment" class="listDepartmentAction"
+			method="listDepartment">
+			<result name="success">/files/bumen.jsp</result>
+		</action>
+
+		<action name="addDepartment" class="addDepartmentAction"
+			method="addDepartment">
+			<result name="success" type="redirectAction">listDepartment</result>
+			<result name="input">/files/addbumen.jsp</result>
+		</action>
+
+		<action name="editDepartment" class="editDepartmentAction"
+			method="editDepartment">
+			<result name="success">/files/editbumen.jsp</result>
+		</action>
+
+		<action name="updateDepartment" class="updateDepartmentAction"
+			method="updateDepartment">
+			<result name="success" type="redirectAction">listDepartment</result>
+			<result name="input">/files/editbumen.jsp</result>
+		</action>
+		<!--管理Office部分的Action -->
+
+		<action name="addOffice" class="addOfficeAction" method="addOffice">
+			<result name="success" type="redirectAction">listOffice</result>
+			<result name="input">/files/addjiedaobanguanliyuan.jsp</result>
+		</action>
+
+		<action name="listOffice" class="listOfficeAction" method="listOffice">
+			<result name="success">/files/jiedaobanguanliyuan.jsp</result>
+			<result name="input">/files/jiedaobanguanliyuan.jsp</result>
+		</action>
+
+		<action name="deleteOffice" class="deleteOfficeAction" method="deleteOffice">
+			<result name="success" type="redirectAction">listOffice</result>
+			<result name="input" type="redirectAction">listOffice</result>
+		</action>
+
+		<action name="editOffice" class="editOfficeAction" method="editOffice">
+			<result name="success">/files/editjiedaobanguanliyuan.jsp</result>
+			<result name="input" type="redirectAction">listOffice</result>
+		</action>
+
+		<action name="updateOffice" class="updateOfficeAction" method="updateOffice">
+			<result name="success" type="redirectAction">listOffice</result>
+			<result name="input">/files/editjiedaobanguanliyuan.jsp</result>
+		</action>
+
+		<!--管理Street部分的Action -->
+		<action name="addStreet" class="addStreetAction" method="addStreet">
+			<result name="success" type="redirectAction">listStreet</result>
+			<result name="input">/files/addjianchayuan.jsp</result>
+		</action>
+
+		<action name="listStreet" class="listStreetAction" method="listStreet">
+			<result name="success">/files/jianchayuan.jsp</result>
+		</action>
+
+		<action name="editStreet" class="editStreetAction" method="editStreet">
+			<result name="success">/files/eidtjianchayuan.jsp</result>
+		</action>
+
+		<action name="updateStreet" class="updateStreetAction" method="updateStreet">
+			<result name="success" type="redirectAction">listStreet</result>
+			<result name="input">/files/eidtjianchayuan.jsp</result>
+		</action>
+
+		<action name="deleteStreet" class="deleteStreetAction" method="deleteStreet">
+			<result name="success" type="redirectAction">listStreet</result>
+		</action>
+
+		<action name="addCompanyView" class="getStreetAction" method="getStreets">
+			<result name="success">/files/addCompany.jsp</result>
+		</action>
+		<!--管理Company部分的Action -->
+		<action name="saveCompany" class="addCompanyAction" method="addCompany">
+			<result name="success" type="redirectAction">listCompany</result>
+			<result name="input">/files/addCompany.jsp</result>
+		</action>
+
+		<action name="listCompany" class="listCompanyAction" method="officeView">
+			<result name="success">/files/officeViewOfCompany.jsp</result>
+		</action>
+
+		<action name="deleteCompany" class="deleteCompanyAction"
+			method="deleteCompany">
+			<result name="success" type="redirectAction">listCompany</result>
+			<result name="input" type="redirectAction">listCompany</result>
+		</action>
+
+		<action name="editCompany" class="editCompanyAction" method="editCompany">
+			<result name="success">/files/editCompany.jsp</result>
+			<result name="input" type="redirectAction">listCompany</result>
+		</action>
+
+		<action name="updateCompany" class="updateCompanyAction"
+			method="updateCompany">
+			<result name="success" type="redirectAction">listCompany</result>
+			<result name="input" >/files/editCompany.jsp</result>
+		</action>
+
+		<action name="importCompany" class="importCompanyAction">
+			<result name="success" type="redirectAction">listCompany</result>
+			<result name="input" >/files/errorList.jsp</result>
+		</action>
+
+		<action name="exportCompany" class="exportCompanyAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">filename="AllUsers.xls"</param>
+				<param name="inputName">downloadFile</param>
+			</result>
+		</action>
+
+		<action name="searchCompany" class="searchCompanyAction"
+			method="searchCompany">
+			<result name="success">/files/officeViewOfCompany.jsp</result>
+			<result name="input">/files/officeViewOfCompany.jsp</result>
+		</action>
+
+
+		<action name="listAllCompany" class="listAllCompanyAction"
+			method="adminView">
+			<result name="success">/files/chakan.jsp</result>
+			<result name="input">/files/chakan.jsp</result>
+		</action>
+
+		<action name="listDepartmentCompany" class="listDepartmentCompanyAction"
+			method="departmentView">
+			<result name="success">/files/department.jsp</result>
+			<result name="input">/files/department.jsp</result>
+		</action>
+
+		<action name="adminSearchCompany" class="adminSearchCompanyAction"
+			method="adminSearchCompany">
+			<result name="success">/files/chakan.jsp</result>
+			<result name="input">/files/chakan.jsp</result>
+		</action>
+		<action name="departmentSearchCompany" class="departmentSearchCompanyAction"
+			method="departmentSearchCompany">
+			<result name="success">/files/department.jsp</result>
+			<result name="input">/files/department.jsp</result>
+		</action>
+
+		<action name="historyList" class="historyListAction" method="streetViewCompany">
+			<result name="success">/files/jianchayuanchakanjilu.jsp</result>
+			<result name="input">/files/jianchayuanchakanjilu.jsp</result>
+		</action>
+
+		<action name="streetSearchCompany" class="checkSearchCompany"
+			method="checkSearchCompany">
+			<result name="success">/files/jianchayuanchakanjilu.jsp</result>
+			<result name="input">/files/jianchayuanchakanjilu.jsp</result>
+		</action>
+
+		<action name="uncheckedCompany" class="uncheckedCompanyAction"
+			method="uncheckedCompany">
+			<result name="success">/files/weiwancheng.jsp</result>
+			<result name="input">/files/noUnchecked.jsp</result>
+		</action>
+        <!-- 填表-->
+		<action name="fillForm" class="fillFormAction" method="fillForm">
+			<result name="1">/files/cangchuwuliu.jsp</result>
+			<result name="2">/files/gongzhongjuji.jsp</result>
+			<result name="3">/files/jiajuzhizao.jsp</result>
+			<result name="4">/files/jianzhushigong.jsp</result>
+			<result name="5">/files/jiuxiao.jsp</result>
+			<result name="6">/files/weixianhuaxuepin.jsp</result>
+			<result name="7">/files/cangchuwuliu.jsp</result>
+			<result name="input">/files/weiwancheng.jsp</result>
+			
+		</action>
+
+		<action name="saveForm" class="saveFormAction" method="saveForm">
+			<result name="success" type="redirectAction">uncheckedCompany</result>
+			<result name="input" type="redirectAction">uncheckedCompany</result>
+		</action>
+        <!-- 查看表 -->
+		<action name="viewHistoryForm" class="viewHistoryFormAction"
+			method="viewHistoryForm">
+			<result name="1">/files/ViewCangchuwuliu.jsp</result>
+			<result name="2">/files/Viewgongzhongjuji.jsp</result>
+			<result name="3">/files/Viewjiajuzhizao.jsp</result>
+			<result name="4">/files/Viewjianzhushigong.jsp</result>
+			<result name="5">/files/Viewjiuxiao.jsp</result>
+			<result name="6">/files/Viewweixianhuaxuepin.jsp</result>
+			<result name="7">/files/ViewCangchuwuliu.jsp</result>
+			<result name="input">/files/nohistory1.jsp</result>
+		</action>
+		
+		<!-- 查看自己的检查表 -->
+		<action name="selfHistory" class="selfHistoryFormAction" method="selfHistoryForm">
+			<result name="1">/files/ViewCangchuwuliu.jsp</result>
+			<result name="2">/files/Viewgongzhongjuji.jsp</result>
+			<result name="3">/files/Viewjiajuzhizao.jsp</result>
+			<result name="4">/files/Viewjianzhushigong.jsp</result>
+			<result name="5">/files/Viewjiuxiao.jsp</result>
+			<result name="6">/files/Viewweixianhuaxuepin.jsp</result>
+			<result name="7">/files/ViewCangchuwuliu.jsp</result>
+			<result name="input">/files/ViewCangchuwuliu.jsp</result>
+		</action>
+		
+		<!-- 查看消息 -->
+		<action name="viewMessage" class="viewMessageAction" method="viewMessage">
+		<result name="good">/files/companyMessage.jsp</result>
+		<result name="bad">/files/errorCompanyMessage.jsp</result>
+		</action>
+		
+		
+		<!-- 实现联级菜单 -->
+		<action name="ajax" class="com.project.ajax.ajaxAction">
+			<result name="success">/files/chakan.jsp</result>
+		</action>
+		<!-- 精确搜索 -->
+		<action name="adminQuickSerach" class="adminQuickSerachAction" method="adminQuickSerach">
+		<result name="success">/files/chakan.jsp</result>
+		<result name="input">/files/chakan.jsp</result>
+		</action>
+		
+		<action name="departmentQuickSerach" class="departmentQuickSerachAction" method="departmentQuickSerach">
+		<result name="success">/files/department.jsp</result>
+		<result name="input">/files/department.jsp</result>
+		</action>
+		
+		<action name="officeQuickSerach" class="officeQuickSerachAction" method="officeQuickSerach">
+		<result name="success">/files/officeViewOfCompany.jsp</result>
+		<result name="input">/files/officeViewOfCompany.jsp</result>
+		</action>
+		
+		<action name="streetQuickSerach" class="streetQuickSerachAction" method="streetQuickSerach">
+		<result name="success">/files/jianchayuanchakanjilu.jsp</result>
+			<result name="input">/files/jianchayuanchakanjilu.jsp</result>
+		</action>
+		<!-- 批量删除 -->
+		<action name="deleteMany" class="deleteManyAction" method="deleteMany">
+		<result name="success" type="redirectAction">listCompany</result>
+		<result name="input" type="redirectAction">listCompany</result>
+		</action>
+	
+		<action name="deleteManyStreet" class="deleteManyStreetAction" method="deleteManyStreet">
+			<result name="success" type="redirectAction">listStreet</result>
+		<result name="input" type="redirectAction">listStreet</result>
+		</action>
+		
+		<action name="deleteManyOffice" class="deleteManyOfficeAction" method="deleteManyOffice">
+			<result name="success" type="redirectAction">listOffice</result>
+		<result name="input" type="redirectAction">listOffice</result>
+		</action>
+		
+          <action name="deleteManyUser" class="deleteManyUserAction" method="deleteManyUser">
+			<result name="success" type="redirectAction">listZUsers</result>
+		<result name="input" type="redirectAction">listZUsers</result>
+		</action>
+		
+		<!-- 定位检查表 -->
+		<action name="locateCheckList" class="LocateCheckListAction" method="LocateCheckList">
+            <result name="1">/files/ViewCangchuwuliu.jsp</result>
+			<result name="2">/files/Viewgongzhongjuji.jsp</result>
+			<result name="3">/files/Viewjiajuzhizao.jsp</result>
+			<result name="4">/files/Viewjianzhushigong.jsp</result>
+			<result name="5">/files/Viewjiuxiao.jsp</result>
+			<result name="6">/files/Viewweixianhuaxuepin.jsp</result>
+			<result name="7">/files/ViewCangchuwuliu.jsp</result>
+			<result name="input">/files/nohistory.jsp</result>
+		</action>
+		
+		<!-- 个人信息 -->
+		<action name="selfMessage" class="selfMessageAction" method="selfMessage">
+		<result name="success">/files/adminSelfMsg.jsp</result>
+		<result name="input">/login.jsp</result>
+		</action>
+		
+		<!-- 修改密码 -->
+		<action name="updatePassword" class="updatePasswordAction" method="updatePassword">
+		<result name="success" type="redirectAction">selfMessage</result>
+		<result name="input">/files/editPassword.jsp</result>
+		</action>
+
+	</package>
+</struts>

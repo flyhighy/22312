@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 指定校验配置文件的DTD信息 -->
+<!DOCTYPE validators PUBLIC 
+	"-//OpenSymphony Group//XWork Validator 1.0.3//EN"
+	"http://www.opensymphony.com/xwork/xwork-validator-1.0.3.dtd">
+<!-- 校验文件的根元素 -->
+<validators>
+	<!-- 校验Action的username属性 -->
+	<field name="company.user.userUsername">
+		<field-validator type="requiredstring" short-circuit="true">
+			<param name="trim">true</param>
+			<message>必须输入企业工商号</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[(\w{4,25})]]></param>
+			<message>您输入的用户名只能是字母和数字
+				，且长度必须在4到25之间</message>
+		</field-validator>
+	</field>
+		<!-- 校验Action的password -->
+	<field name="company.user.userPassword">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>必须输入密码</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[(\w{4,25})]]></param>
+			<message>您输入的密码只能是字母和数字
+				，且长度必须在4到25之间</message>
+		</field-validator>
+	</field>
+	
+			<!-- 校验Action的officename -->
+	<field name="company.companyName">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>必须填写企业名称</message>
+		</field-validator>
+	</field>
+	
+<!-- 	<field name="company.companyArea"> -->
+<!-- 		<field-validator type="requiredstring"> -->
+<!-- 			<param name="trim">true</param> -->
+<!-- 			<message>必须填写企业面积</message> -->
+<!-- 		</field-validator> -->
+<!-- 	</field> -->
+	
+	<field name="company.user.userName">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>必须填写负责人名称</message>
+		</field-validator>
+	</field>
+	
+
+	
+	<field name="company.companyPosition">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>必须填写负责人职位</message>
+		</field-validator>
+	</field>
+	
+	<field name="company.user.userPhone">
+	    <field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>必须填写负责人电话</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression">((\d{3,4}-){0,1}(\d{8}))||(1\d{10})</param>
+			<message>电话格式错误</message>
+		</field-validator>
+	</field>
+</validators>
+

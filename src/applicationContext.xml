@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/eg"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+		<property name="maxActive" value="100"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="maxWait" value="500"></property>
+		<property name="defaultAutoCommit" value="true"></property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/project/bean/User.hbm.xml</value>
+				<value>com/project/bean/Subdivision.hbm.xml</value>
+				<value>com/project/bean/Street.hbm.xml</value>
+				<value>com/project/bean/SendMsg.hbm.xml</value>
+				<value>com/project/bean/Review.hbm.xml</value>
+				<value>com/project/bean/Office.hbm.xml</value>
+				<value>com/project/bean/ListItem.hbm.xml</value>
+				<value>com/project/bean/District.hbm.xml</value>
+				<value>com/project/bean/Department.hbm.xml</value>
+				<value>com/project/bean/Company.hbm.xml</value>
+				<value>com/project/bean/CheckList.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userDao" class="com.project.Dao.Impl.UserDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="adminDao" class="com.project.Dao.Impl.AdminDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="companydao" class="com.project.Dao.Impl.CompanyDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="checkListdao" class="com.project.Dao.Impl.CheckListDAOIpml">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="userService" class="com.project.Service.Impl.UserServiceImpl">
+		<property name="userdao" ref="userDao"></property>
+	</bean>
+
+	<bean id="adminService" class="com.project.Service.Impl.AdminServiceImpl">
+		<property name="admindao" ref="adminDao"></property>
+	</bean>
+
+
+	<bean id="companyService" class="com.project.Service.Impl.CompanyServiceImpl">
+		<property name="companydao" ref="companydao"></property>
+	</bean>
+
+	<bean id="checkListervice" class="com.project.Service.Impl.CheckListServiceImpl">
+		<property name="checkListdao" ref="checkListdao"></property>
+	</bean>
+	<!-- 处理登陆的业务 -->
+	<bean id="LoginAction" class="com.project.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<!-- 处理users的业务 -->
+	<bean id="addUserAction" class="com.project.action.ManageUserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="listZUserAction" class="com.project.action.ListUserAction"  scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="deleteUserAction" class="com.project.action.ManageUserAction"  scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="editPUserAction" class="com.project.action.ManageUserAction"  scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="updateUserAction" class="com.project.action.ManageUserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<!-- 处理department的业务 -->
+
+
+	<bean id="addDepartmentAction" class="com.project.action.ManageDepartment" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="listDepartmentAction" class="com.project.action.ManageDepartment"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="editDepartmentAction" class="com.project.action.ManageDepartment"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="updateDepartmentAction" class="com.project.action.ManageDepartment" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<!--处理office业务 -->
+	<bean id="addOfficeAction" class="com.project.action.ManageOfficeAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="listOfficeAction" class="com.project.action.ManageOfficeAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="deleteOfficeAction" class="com.project.action.ManageOfficeAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="editOfficeAction" class="com.project.action.ManageOfficeAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="updateOfficeAction" class="com.project.action.ManageOfficeAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<!-- 处理street的业务 -->
+
+	<bean id="addStreetAction" class="com.project.action.ManageStreetAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="listStreetAction" class="com.project.action.ManageStreetAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="editStreetAction" class="com.project.action.ManageStreetAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="updateStreetAction" class="com.project.action.ManageStreetAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="deleteStreetAction" class="com.project.action.ManageStreetAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="getStreetAction" class="com.project.action.ManageStreetAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<!-- 处理company的业务 -->
+	<bean id="addCompanyAction" class="com.project.action.ManageCompanyAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="companyService" ref="companyService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="listCompanyAction" class="com.project.action.ListCompanyAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="companyService" ref="companyService"></property>
+	</bean>
+
+	<bean id="deleteCompanyAction" class="com.project.action.ManageCompanyAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+	</bean>
+
+	<bean id="editCompanyAction" class="com.project.action.ManageCompanyAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="companyService" ref="companyService"></property>
+	</bean>
+
+	<bean id="updateCompanyAction" class="com.project.action.ManageCompanyAction" scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="importCompanyAction" class="com.project.action.ImportExcelAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="companyService" ref="companyService"></property>
+
+	</bean>
+
+	<bean id="exportCompanyAction" class="com.project.action.GenerateExcel"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+	</bean>
+
+	<bean id="searchCompanyAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="listAllCompanyAction" class="com.project.action.ListCompanyAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="listDepartmentCompanyAction" class="com.project.action.ListCompanyAction" >
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="adminSearchCompanyAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	<bean id="departmentSearchCompanyAction" class="com.project.action.ListCompanyAction" >
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="historyListAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="checkSearchCompany" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="uncheckedCompanyAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	
+	
+	<!-- 管理表格 -->
+	<bean id="fillFormAction" class="com.project.action.ManageCheckformAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<bean id="saveFormAction" class="com.project.action.ManageCheckformAction" scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="checkListervice" ref="checkListervice"></property>
+	</bean>
+
+	<bean id="viewHistoryFormAction" class="com.project.action.ManageCheckformAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="checkListervice" ref="checkListervice"></property>
+	</bean>
+	
+	<bean id="selfHistoryFormAction" class="com.project.action.ManageCheckformAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="checkListervice" ref="checkListervice"></property>
+	</bean>
+	
+	<bean id="viewMessageAction" class="com.project.action.ManageCheckformAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="checkListervice" ref="checkListervice"></property>
+	</bean>
+   <!-- 精确搜索 -->
+   <bean id="adminQuickSerachAction" class="com.project.action.ListCompanyAction" >
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	 <bean id="departmentQuickSerachAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	 <bean id="officeQuickSerachAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	 <bean id="streetQuickSerachAction" class="com.project.action.ListCompanyAction">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	<!-- 批量删除 -->
+	 <bean id="deleteManyAction" class="com.project.action.ListCompanyAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	 <bean id="deleteManyStreetAction" class="com.project.action.ManageStreetAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	<bean id="deleteManyOfficeAction" class="com.project.action.ManageOfficeAction"  scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	<bean id="deleteManyUserAction" class="com.project.action.ManageUserAction"  scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="LocateCheckListAction" class="com.project.action.ManageCheckformAction"  scope="prototype">
+		<property name="companyService" ref="companyService"></property>
+		<property name="checkListervice" ref="checkListervice"></property>
+	</bean>
+	
+	<bean id="selfMessageAction" class="com.project.action.ManageUserAction"  scope="prototype">
+	</bean>
+	<bean id="updatePasswordAction" class="com.project.action.ManageUserAction"  scope="prototype">
+	<property name="userService" ref="userService"></property>
+	</bean>
+	
+	
+
+</beans>
